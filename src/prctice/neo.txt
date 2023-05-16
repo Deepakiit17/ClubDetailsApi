@@ -1,0 +1,272 @@
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { HOST_URL } from "../../action/api";
+import axios from 'axios';
+
+const useStyles = makeStyles({
+    table: {
+        minWidth: 650,
+    },
+});
+
+const ClubDetails = () => {
+    const classes = useStyles();
+
+    const [club, setClub] = useState(null);
+
+    useEffect(() => {
+        var token = localStorage.getItem("token");
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", token);
+        // myHeaders.append("Ilp-Club-Id", "ilpclub1001");
+    
+        const requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+    
+        fetch("http://15.206.189.238:8000/ilpapp2/club/details/data", requestOptions)
+          .then(response => response.json())
+          .then(club => {
+            console.log("dskoaoaoaoaao", club)
+            setClub(club)
+        })
+          .catch(error => console.log('error', error));
+      }, []);
+
+      if (!club) {
+        return <div>Loading...</div>;
+      }
+
+    // useEffect(() => {
+    //     axios.get("http://15.206.189.238:8000/ilpapp2/club/details/data").then(response => {
+    //       setClub(response.data);
+    //     });
+    //   }, []);
+
+    console.log("dataclub", club);
+
+    const clubData = {
+        institute_id: 12345,
+        institute_name: "ABC",
+        institute_address: "123 Main Street, Anytown USA",
+        institute_type: "College",
+        executive_members: [
+            {
+                name: "Bob Smith",
+                gender: "male",
+                email: "bobsmith@example.com",
+                phone: "555-555-5555",
+                designation: "Business Consultant",
+                class: "7",
+            },
+            {
+                name: "Alice Smith",
+                gender: "male",
+                email: "alicesmith@example.com",
+                phone: "555-555-5555",
+                designation: "Faculty Coordinator",
+                class: "4",
+            },
+            {
+                name: "Tom Jones",
+                gender: "Female",
+                email: "tomjones@example.com",
+                phone: "555-555-5555",
+                designation: "Club Counselor",
+                class: "3",
+            },
+            {
+                name: "John Smith",
+                gender: "Male",
+                email: "john.smith@example.com",
+                phone: "(123) 456-7890",
+                designation: "President",
+                class: "Senior",
+            },
+            {
+                name: "Jane Doe",
+                gender: "Female",
+                email: "jane.doe@example.com",
+                phone: "(234) 567-8901",
+                designation: "Vice President",
+                class: "Junior",
+            },
+            {
+                name: "John Doe",
+                gender: "Female",
+                email: "johndoe@example.com",
+                phone: "555-555-5555",
+                designation: "President",
+                class: "8"
+            },
+            {
+                name: "Jane Doe",
+                gender: "Female",
+                email: "janedoe@example.com",
+                phone: "555-555-5555",
+                designation: "Vice President",
+                class: "7",
+            },
+            {
+                name: "Bob Smith",
+                gender: "male",
+                email: "bobsmith@example.com",
+                phone: "555-555-5555",
+                designation: "Secretary",
+                class: "7",
+            },
+            {
+                name: "Alice Smith",
+                gender: "male",
+                email: "alicesmith@example.com",
+                phone: "555-555-5555",
+                designation: "Treasurer",
+                class: "4",
+            },
+            {
+                name: "Tom Jones",
+                gender: "Female",
+                email: "tomjones@example.com",
+                phone: "555-555-5555",
+                designation: "Member",
+                class: "3",
+            },
+        ],
+        student_members: [
+            {
+                name: "Bob Johnson",
+                gender: "Male",
+                email: "bob.johnson@example.com",
+                phone: "(345) 678-9012",
+                class: "5",
+            },
+            {
+                name: "Sally Brown",
+                gender: "Female",
+                email: "sally.brown@example.com",
+                phone: "(456) 789-0123",
+                class: "8",
+            },
+            {
+                name: "Bob Johnson",
+                gender: "Male",
+                email: "bob.johnson@example.com",
+                phone: "(345) 678-9012",
+                class: "5",
+            },
+            {
+                name: "Sally Brown",
+                gender: "Female",
+                email: "sally.brown@example.com",
+                phone: "(456) 789-0123",
+                class: "8",
+            },
+            {
+                name: "Bob Johnson",
+                gender: "Male",
+                email: "bob.johnson@example.com",
+                phone: "(345) 678-9012",
+                class: "5",
+            },
+        ],
+    };
+
+    return (
+        <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="club details">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Field</TableCell>
+                        <TableCell>Value</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                
+                    <TableRow>
+                        <TableCell component="th" scope="row">Institute ID</TableCell>
+                        <TableCell>{club.club.institute_id}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell component="th" scope="row">Institute Name</TableCell>
+                        <TableCell>{clubData.institute_name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell component="th" scope="row">Institute Address</TableCell>
+                        <TableCell>{clubData.institute_address}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell component="th" scope="row">Institute Type</TableCell>
+                        <TableCell>{clubData.institute_type}</TableCell>
+                    </TableRow>
+                    {/* <TableRow>
+                        <TableCell component="th" scope="row">Executive Members</TableCell>
+                        <TableCell>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Gender</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Phone</TableCell>
+                                        <TableCell>Designation</TableCell>
+                                        <TableCell>Class</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {clubData.executive_members.map((member) => (
+                                        <TableRow key={member.email}>
+                                            <TableCell>{member.name}</TableCell>
+                                            <TableCell>{member.gender}</TableCell>
+                                            <TableCell>{member.email}</TableCell>
+                                            <TableCell>{member.phone}</TableCell>
+                                            <TableCell>{member.designation}</TableCell>
+                                            <TableCell>{member.class}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell component="th" scope="row">Student Members</TableCell>
+                        <TableCell>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Gender</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Phone</TableCell>
+                                        <TableCell>Class</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {clubData.student_members.map((member) => (
+                                        <TableRow key={member.email}>
+                                            <TableCell>{member.name}</TableCell>
+                                            <TableCell>{member.gender}</TableCell>
+                                            <TableCell>{member.email}</TableCell>
+                                            <TableCell>{member.phone}</TableCell>
+                                            <TableCell>{member.class}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableCell>
+                    </TableRow> */}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
+};
+
+export default ClubDetails
